@@ -1,0 +1,60 @@
+# 修仙题材随机肉鸽（Cocos Creator 3.8 TS）
+
+> 当前仓库仅包含脚本与配置文件。请在 Cocos Creator 3.8 新建 2D TypeScript 项目后，将本仓库 `assets/` 目录整体拷贝到你的项目 `assets/` 内即可运行。
+
+## 目录结构
+```
+assets/
+  scripts/
+    Boot.ts
+    framework/
+      platform/
+      ui/
+    games/xianxia/
+  resources/
+    xianxia/configs/
+```
+
+## 入口挂载（必须）
+1. 在 Cocos Creator 打开项目。
+2. 在默认场景中选中 `Canvas` 节点。
+3. 添加组件：`Boot`（路径：`assets/scripts/Boot.ts`）。
+4. 运行预览即可进入菜单。
+
+## 运行预览
+- 编辑器预览：点击运行，自动走 DummyAdapter，完整跑通菜单 → 战斗 → 奖励 → 商店/奇遇 → Boss → 结算 → 重开。
+
+## 平台能力适配
+- 所有平台 API 仅允许出现在 `assets/scripts/framework/platform/adapters/` 中。
+- 编辑器/浏览器会自动降级 `DummyAdapter`。
+
+## 广告位配置（预留）
+- 预留接口：`Platform.showRewardedAd(adUnitId)`。
+- 后续把广告位 id 写到你自己的配置（建议新增 `configs/runtime.json`），然后在 `GameManager` 或 `Boot` 调用即可。
+
+## 抖音侧边栏复访能力
+- DouyinAdapter 内已封装 `getLaunchOptionsSync` 并在启动时打印 `scene/query`。
+- 复访入口可以在主菜单提示位置展示（当前 UI 顶部信息栏会显示 scene/query）。
+
+## 平台隔离自检
+建议在项目根目录执行：
+```
+rg -n "wx\\.|tt\\." assets/scripts -g"*.ts"
+```
+应只命中 `assets/scripts/framework/platform/adapters/` 与 `assets/scripts/typings/platform.d.ts`。
+
+## 配置加载自检
+- 配置文件均位于 `assets/resources/xianxia/configs/`。
+- 运行时控制台会输出 `[Config] loaded` 列表。
+
+## 验收标准（MVP）
+- 运行后从菜单开始一局，能走完至少 5 个节点并结算。
+- Debug/GM 面板可用：加灵石、加道心、跳节点、刷新商店、强制海克斯、查看保底。
+- 平台隔离通过 `rg` 检查。
+- JSON 配置可加载并驱动羁绊/海克斯/弟子/法宝/奇遇。
+
+## 关键玩法说明
+- 单局结构：3 幕 × 5 节点，含斗法/奇遇/坊市/妖王/劫境节点。
+- 成长系统：弟子升阶、羁绊断点 2/4/6、海克斯四类池、法宝组件/成品。
+
+更多构建步骤见 [BUILD.md](BUILD.md)，提审注意事项见 [CHECKLIST.md](CHECKLIST.md)。

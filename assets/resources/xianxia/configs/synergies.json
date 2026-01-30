@@ -1,0 +1,92 @@
+[
+  {
+    "id": "剑修",
+    "name": "剑修",
+    "tiers": [
+      { "count": 2, "effects": { "attackBonus": 10 }, "desc": "额外命中" },
+      { "count": 4, "effects": { "attackBonus": 25 }, "desc": "剑气穿透" },
+      { "count": 6, "effects": { "attackBonus": 60 }, "desc": "剑气回弹+击杀万剑归宗" }
+    ]
+  },
+  {
+    "id": "雷法",
+    "name": "雷法",
+    "tiers": [
+      { "count": 2, "effects": { "attackBonus": 12 }, "desc": "雷印" },
+      { "count": 4, "effects": { "attackBonus": 28 }, "desc": "叠满天雷" },
+      { "count": 6, "effects": { "attackBonus": 70 }, "desc": "天雷分叉连劈+回真元" }
+    ]
+  },
+  {
+    "id": "丹道",
+    "name": "丹道",
+    "tiers": [
+      { "count": 2, "effects": { "hpBonus": 40 }, "desc": "开局回春" },
+      { "count": 4, "effects": { "hpBonus": 80 }, "desc": "溢疗成盾" },
+      { "count": 6, "effects": { "hpBonus": 160 }, "desc": "盾破药爆（毒伤+削抗）" }
+    ]
+  },
+  {
+    "id": "符箓",
+    "name": "符箓",
+    "tiers": [
+      { "count": 2, "effects": { "attackBonus": 8 }, "desc": "随机符" },
+      { "count": 4, "effects": { "attackBonus": 20 }, "desc": "连符" },
+      { "count": 6, "effects": { "attackBonus": 50 }, "desc": "符阵自动落符+扩散" }
+    ]
+  },
+  {
+    "id": "阵道",
+    "name": "阵道",
+    "tiers": [
+      { "count": 2, "effects": { "hpBonus": 30 }, "desc": "相邻阵眼加成" },
+      { "count": 4, "effects": { "hpBonus": 70 }, "desc": "护阵减伤" },
+      { "count": 6, "effects": { "hpBonus": 140 }, "desc": "反噬禁制（打断/延迟施法）" }
+    ]
+  },
+  {
+    "id": "体修",
+    "name": "体修",
+    "tiers": [
+      { "count": 2, "effects": { "hpBonus": 50 }, "desc": "金身层数" },
+      { "count": 4, "effects": { "hpBonus": 110 }, "desc": "满层霸体免控" },
+      { "count": 6, "effects": { "hpBonus": 200 }, "desc": "反弹+踏地震荡眩晕" }
+    ]
+  },
+  {
+    "id": "御兽",
+    "name": "御兽",
+    "tiers": [
+      { "count": 2, "effects": { "attackBonus": 10 }, "desc": "召唤灵兽" },
+      { "count": 4, "effects": { "attackBonus": 22 }, "desc": "灵兽死灵爆" },
+      { "count": 6, "effects": { "attackBonus": 55 }, "desc": "灵兽分裂/复活一次+继承法宝触发" }
+    ]
+  },
+  {
+    "id": "魂修",
+    "name": "魂修",
+    "tiers": [
+      { "count": 2, "effects": { "attackBonus": 12 }, "desc": "击杀魂火" },
+      { "count": 4, "effects": { "attackBonus": 26 }, "desc": "魂火降疗灼烧" },
+      { "count": 6, "effects": { "attackBonus": 65 }, "desc": "夺舍短控为我作战" }
+    ]
+  },
+  {
+    "id": "器灵",
+    "name": "器灵",
+    "tiers": [
+      { "count": 2, "effects": { "attackBonus": 8 }, "desc": "法宝多词条" },
+      { "count": 4, "effects": { "attackBonus": 18 }, "desc": "触发率提升可连锁" },
+      { "count": 6, "effects": { "attackBonus": 45 }, "desc": "本命法宝随机翻倍但有副作用" }
+    ]
+  },
+  {
+    "id": "天命",
+    "name": "天命",
+    "tiers": [
+      { "count": 2, "effects": { "attackBonus": 6 }, "desc": "奖励多一选项" },
+      { "count": 4, "effects": { "attackBonus": 14 }, "desc": "每幕额外海克斯" },
+      { "count": 6, "effects": { "attackBonus": 32 }, "desc": "海克斯可保留旧效果并叠加上限" }
+    ]
+  }
+]

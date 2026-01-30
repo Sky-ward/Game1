@@ -1,0 +1,22 @@
+[
+  { "id": 101, "name": "诛邪剑匣", "recipe": ["玄铁", "灵木"], "trigger": "普攻命中", "effect": { "desc": "追加剑气", "params": { "ratio": 0.3 } }, "rarity": 2 },
+  { "id": 102, "name": "五雷令", "recipe": ["雷晶", "朱砂"], "trigger": "技能释放", "effect": { "desc": "落雷追加", "params": { "ratio": 0.4 } }, "rarity": 2 },
+  { "id": 103, "name": "护心丹囊", "recipe": ["妖丹", "灵石"], "trigger": "生命低于50%", "effect": { "desc": "护盾生成", "params": { "shield": 80 } }, "rarity": 2 },
+  { "id": 104, "name": "锁魂灯", "recipe": ["魂玉", "灵木"], "trigger": "击杀", "effect": { "desc": "魂火灼烧", "params": { "ratio": 0.2 } }, "rarity": 3 },
+  { "id": 105, "name": "玄阵旗", "recipe": ["阵旗", "玄铁"], "trigger": "开局", "effect": { "desc": "阵法加成", "params": { "hp": 60 } }, "rarity": 2 },
+  { "id": 106, "name": "寒魄铃", "recipe": ["寒髓", "魂玉"], "trigger": "技能命中", "effect": { "desc": "减速冻结", "params": { "ratio": 0.15 } }, "rarity": 3 },
+  { "id": 107, "name": "焚天珠", "recipe": ["火髓", "灵木"], "trigger": "连击", "effect": { "desc": "灼烧爆发", "params": { "ratio": 0.35 } }, "rarity": 3 },
+  { "id": 108, "name": "回元佩", "recipe": ["灵石", "雷晶"], "trigger": "击杀", "effect": { "desc": "回真元", "params": { "energy": 10 } }, "rarity": 1 },
+  { "id": 109, "name": "天机镜", "recipe": ["朱砂", "灵木"], "trigger": "开局", "effect": { "desc": "揭示敌方弱点", "params": { "ratio": 0.2 } }, "rarity": 2 },
+  { "id": 110, "name": "妖契环", "recipe": ["妖丹", "魂玉"], "trigger": "灵兽攻击", "effect": { "desc": "提升灵兽输出", "params": { "ratio": 0.3 } }, "rarity": 2 },
+  { "id": 111, "name": "玄火炉", "recipe": ["火髓", "玄铁"], "trigger": "战斗结束", "effect": { "desc": "炼器强化", "params": { "atk": 6 } }, "rarity": 1 },
+  { "id": 112, "name": "符印宝盒", "recipe": ["朱砂", "魂玉"], "trigger": "符箓触发", "effect": { "desc": "符印复制", "params": { "ratio": 0.25 } }, "rarity": 2 },
+  { "id": 113, "name": "雷影靴", "recipe": ["雷晶", "寒髓"], "trigger": "开局", "effect": { "desc": "提升速度", "params": { "speed": 0.1 } }, "rarity": 1 },
+  { "id": 114, "name": "幽魂指环", "recipe": ["魂玉", "灵石"], "trigger": "击杀", "effect": { "desc": "魂火强化", "params": { "ratio": 0.25 } }, "rarity": 2 },
+  { "id": 115, "name": "护山碑", "recipe": ["阵旗", "灵石"], "trigger": "护阵", "effect": { "desc": "减伤", "params": { "ratio": 0.2 } }, "rarity": 2 },
+  { "id": 116, "name": "青木笛", "recipe": ["灵木", "妖丹"], "trigger": "召唤灵兽", "effect": { "desc": "灵兽增伤", "params": { "ratio": 0.25 } }, "rarity": 2 },
+  { "id": 117, "name": "火龙纹章", "recipe": ["火髓", "妖丹"], "trigger": "暴击", "effect": { "desc": "火焰追击", "params": { "ratio": 0.3 } }, "rarity": 3 },
+  { "id": 118, "name": "寒玉链", "recipe": ["寒髓", "灵石"], "trigger": "受击", "effect": { "desc": "降低敌人攻击", "params": { "ratio": 0.15 } }, "rarity": 1 },
+  { "id": 119, "name": "炼神玉简", "recipe": ["魂玉", "朱砂"], "trigger": "技能释放", "effect": { "desc": "魂修增伤", "params": { "ratio": 0.3 } }, "rarity": 3 },
+  { "id": 120, "name": "灵纹披风", "recipe": ["灵木", "灵石"], "trigger": "战斗开始", "effect": { "desc": "护盾与攻速", "params": { "hp": 40, "speed": 0.05 } }, "rarity": 1 }
+]
