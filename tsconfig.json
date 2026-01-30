@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2017",
+    "module": "ESNext",
+    "lib": ["DOM", "ES2017"],
+    "types": ["node"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": false,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["assets/**/*.ts", "packages/**/*.ts", "extensions/**/*.ts"]
+}
