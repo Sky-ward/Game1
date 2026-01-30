@@ -1,4 +1,5 @@
 import { Config } from '../../framework/Config';
+import { safeArray } from '../../framework/SafeUtils';
 
 export interface DiscipleConfig {
     id: number;
@@ -50,7 +51,7 @@ export class BattleManager {
         actIndex: number,
         nodeType: string
     ): BattleReport {
-        const synergies = Config.get<SynergyConfig[]>('synergies');
+        const synergies = safeArray(Config.get<SynergyConfig[]>('synergies'));
         const tagCounts: Record<string, number> = {};
         team.forEach((disciple) => {
             disciple.tags.forEach((tag) => {

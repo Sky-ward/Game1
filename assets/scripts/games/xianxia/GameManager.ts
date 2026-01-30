@@ -1,4 +1,5 @@
 import { Config } from '../../framework/Config';
+import { safeArray } from '../../framework/SafeUtils';
 import { RNG } from '../../framework/RNG';
 import { BattleManager, BattleReport, DiscipleConfig, HexConfig, ArtifactConfig } from './BattleManager';
 import { MapManager, MapNode, NodeType } from './MapManager';
@@ -7,10 +8,12 @@ import { ShopManager, ShopSnapshot } from './ShopManager';
 
 export enum GameState {
     Menu = 'menu',
+    Map = 'map',
     Battle = 'battle',
     Reward = 'reward',
     Shop = 'shop',
     Event = 'event',
+    Boss = 'boss',
     Result = 'result',
     Revive = 'revive',
 }
@@ -32,6 +35,7 @@ export interface EventConfig {
 export class GameManager {
     state: GameState = GameState.Menu;
     onStateChanged?: () => void;
+    onToast?: (message: string) => void;
 
     private rng = new RNG();
     private map: MapNode[][] = [];
@@ -61,10 +65,12 @@ export class GameManager {
         this.life = 5;
         this.gold = 20;
         this.reviveUsed = false;
-        this.team = Config.get<DiscipleConfig[]>('disciples').slice(0, 2);
+        const disciples = this.getDisciples();
+        this.team = disciples.slice(0, 2);
         this.hexes = [];
         this.artifacts = [];
-        this.enterNode();
+        this.state = GameState.Map;
+        this.emitStateChanged();
     }
 
     goToMenu() {
@@ -81,13 +87,41 @@ export class GameManager {
     }
 
     getRunInfo() {
+        const node = this.getCurrentNode();
         return {
             act: this.actIndex,
             node: this.nodeIndex,
             life: this.life,
             gold: this.gold,
-            nodeType: this.getCurrentNode().type,
+            nodeType: node.type,
         };
+    }
+
+    getMapPreview(): string {
+        if (this.map.length === 0) {
+            return '地图尚未生成';
+        }
+        const labels: Record<NodeType, string> = {
+            battle: '战',
+            event: '奇',
+            shop: '商',
+            elite: '精',
+            boss: 'Boss',
+        };
+        return this.map
+            .map((act, actIndex) => {
+                const nodes = act
+                    .map((node, nodeIdx) => {
+                        const label = labels[node.type];
+                        if (actIndex === this.actIndex && nodeIdx === this.nodeIndex) {
+                            return `[${label}]`;
+                        }
+                        return ` ${label} `;
+                    })
+                    .join(' ');
+                return `第${actIndex + 1}幕: ${nodes}`;
+            })
+            .join('\n');
     }
 
     getBattleReport(): BattleReport {
@@ -115,6 +149,10 @@ export class GameManager {
         return this.shopManager.getPitySnapshot();
     }
 
+    enterCurrentNode() {
+        this.enterNode();
+    }
+
     toReward() {
         if (this.battleReport.result === '胜利') {
             this.state = GameState.Reward;
@@ -130,17 +168,17 @@ export class GameManager {
             return;
         }
         if (reward.type === 'disciple') {
-            const disciple = Config.get<DiscipleConfig[]>('disciples').find((d) => d.id === reward.payloadId);
+            const disciple = this.getDisciples().find((d) => d.id === reward.payloadId);
             if (disciple) {
                 this.team.push(disciple);
             }
         } else if (reward.type === 'hex') {
-            const hex = Config.get<HexConfig[]>('hexes').find((h) => h.id === reward.payloadId);
+            const hex = this.getHexes().find((h) => h.id === reward.payloadId);
             if (hex) {
                 this.hexes.push(hex);
             }
         } else {
-            const artifact = Config.get<ArtifactConfig[]>('artifacts').find((a) => a.id === reward.payloadId);
+            const artifact = this.getArtifacts().find((a) => a.id === reward.payloadId);
             if (artifact) {
                 this.artifacts.push(artifact);
             }
@@ -154,7 +192,7 @@ export class GameManager {
             return;
         }
         this.gold -= item.price;
-        const disciple = Config.get<DiscipleConfig[]>('disciples').find((d) => d.id === item.id);
+        const disciple = this.getDisciples().find((d) => d.id === item.id);
         if (disciple) {
             this.team.push(disciple);
         }
@@ -169,7 +207,7 @@ export class GameManager {
             this.gold -= cost;
         }
         this.currentShop = this.shopManager.generateShop(
-            Config.get<DiscipleConfig[]>('disciples'),
+            this.getDisciples(),
             this.actIndex,
             this.getActiveTags()
         );
@@ -204,7 +242,8 @@ export class GameManager {
             this.emitStateChanged();
             return;
         }
-        this.enterNode();
+        this.state = GameState.Map;
+        this.emitStateChanged();
     }
 
     revive(accept: boolean) {
@@ -220,12 +259,66 @@ export class GameManager {
 
     forceHexReward() {
         this.currentRewards = this.rewardManager.generateRewards(
-            Config.get<DiscipleConfig[]>('disciples'),
-            Config.get<HexConfig[]>('hexes'),
-            Config.get<ArtifactConfig[]>('artifacts')
+            this.getDisciples(),
+            this.getHexes(),
+            this.getArtifacts()
         ).map((reward, index) => (index === 0 ? { ...reward, type: 'hex' as const } : reward));
         this.state = GameState.Reward;
         this.emitStateChanged();
+    }
+
+    gmAddGold(amount = 50) {
+        this.addGold(amount);
+        this.toast(`灵石 +${amount}`);
+        this.emitStateChanged();
+    }
+
+    gmAddLife(amount = 1) {
+        this.addLife(amount);
+        this.toast(`道心 +${amount}`);
+        this.emitStateChanged();
+    }
+
+    gmGoNextNode() {
+        if (this.state === GameState.Menu || this.map.length === 0) {
+            this.startNewRun();
+            this.toast('已自动开始新局');
+            this.enterCurrentNode();
+            return;
+        }
+        if (this.state === GameState.Map) {
+            this.enterCurrentNode();
+            this.toast('进入当前节点');
+            return;
+        }
+        this.advanceNode();
+        if (this.state !== GameState.Result) {
+            this.enterCurrentNode();
+            this.toast('已推进到下一节点');
+        } else {
+            this.toast('进入结算');
+        }
+    }
+
+    gmRefreshShop() {
+        if (this.state !== GameState.Shop) {
+            this.toast('当前不在商店节点');
+            return;
+        }
+        this.refreshShop(true);
+        this.toast('商店已刷新');
+        this.emitStateChanged();
+    }
+
+    gmForceHexReward() {
+        this.forceHexReward();
+        this.toast('触发海克斯三选一');
+    }
+
+    gmShowPity() {
+        const pity = this.getPitySnapshot();
+        const summary = Object.keys(pity).length ? JSON.stringify(pity) : '暂无保底记录';
+        this.toast(`保底状态:${summary}`);
     }
 
     private enterNode() {
@@ -247,27 +340,29 @@ export class GameManager {
                         this.state = GameState.Result;
                     }
                 } else {
-                    this.state = GameState.Battle;
+                    this.state = node.type === 'boss' ? GameState.Boss : GameState.Battle;
                 }
             } else {
                 this.gold += 5 + this.actIndex * 2;
                 this.currentRewards = this.rewardManager.generateRewards(
-                    Config.get<DiscipleConfig[]>('disciples'),
-                    Config.get<HexConfig[]>('hexes'),
-                    Config.get<ArtifactConfig[]>('artifacts')
+                    this.getDisciples(),
+                    this.getHexes(),
+                    this.getArtifacts()
                 );
-                this.state = GameState.Battle;
+                this.state = node.type === 'boss' ? GameState.Boss : GameState.Battle;
             }
         } else if (node.type === 'shop') {
             this.currentShop = this.shopManager.generateShop(
-                Config.get<DiscipleConfig[]>('disciples'),
+                this.getDisciples(),
                 this.actIndex,
                 this.getActiveTags()
             );
             this.state = GameState.Shop;
         } else {
-            const events = Config.get<EventConfig[]>('events');
-            this.currentEvent = events[this.rng.nextInt(0, events.length - 1)];
+            const events = this.getEvents();
+            if (events.length > 0) {
+                this.currentEvent = events[this.rng.nextInt(0, events.length - 1)];
+            }
             this.state = GameState.Event;
         }
         this.emitStateChanged();
@@ -275,6 +370,79 @@ export class GameManager {
 
     private getCurrentNode(): MapNode {
         return this.map[this.actIndex]?.[this.nodeIndex] ?? { type: 'battle' };
+    }
+
+    private getDisciples(): DiscipleConfig[] {
+        const disciples = safeArray(Config.get<DiscipleConfig[]>('disciples'));
+        if (disciples.length > 0) {
+            return disciples;
+        }
+        return [
+            {
+                id: 1,
+                name: '凡人弟子',
+                rarity: 1,
+                tags: ['凡人'],
+                baseStats: { hp: 80, atk: 12, speed: 1 },
+                skill: { desc: '基础攻击', params: {} },
+                upgrade: { level2: {}, level3: {}, mechanic: '' },
+                shopWeight: 1,
+            },
+        ];
+    }
+
+    private getHexes(): HexConfig[] {
+        const hexes = safeArray(Config.get<HexConfig[]>('hexes'));
+        if (hexes.length > 0) {
+            return hexes;
+        }
+        return [
+            {
+                id: 1,
+                name: '凡心',
+                category: '通用',
+                rarity: 1,
+                weight: 1,
+                desc: '基础加成',
+                tags: ['凡人'],
+                stackRule: 'stack',
+            },
+        ];
+    }
+
+    private getArtifacts(): ArtifactConfig[] {
+        const artifacts = safeArray(Config.get<ArtifactConfig[]>('artifacts'));
+        if (artifacts.length > 0) {
+            return artifacts;
+        }
+        return [
+            {
+                id: 1,
+                name: '护身符',
+                recipe: [],
+                trigger: '被动',
+                effect: { desc: '微弱提升', params: {} },
+                rarity: 1,
+            },
+        ];
+    }
+
+    private getEvents(): EventConfig[] {
+        const events = safeArray(Config.get<EventConfig[]>('events'));
+        if (events.length > 0) {
+            return events;
+        }
+        return [
+            {
+                id: 1,
+                name: '山间奇遇',
+                desc: '你在山路遇到灵泉。',
+                options: [
+                    { desc: '小饮一口', cost: { type: 'life', amount: 0 }, reward: { type: 'life', amount: 1 }, previewTag: '恢复' },
+                    { desc: '装满灵水', cost: { type: 'gold', amount: 0 }, reward: { type: 'gold', amount: 3 }, previewTag: '收获' },
+                ],
+            },
+        ];
     }
 
     private getActiveTags(): string[] {
@@ -290,6 +458,12 @@ export class GameManager {
     private emitStateChanged() {
         if (this.onStateChanged) {
             this.onStateChanged();
+        }
+    }
+
+    private toast(message: string) {
+        if (this.onToast) {
+            this.onToast(message);
         }
     }
 }
