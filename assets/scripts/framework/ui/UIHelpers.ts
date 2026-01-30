@@ -42,3 +42,20 @@ export function createButton(parent: Node, text: string, onClick: () => void): B
     node.on(Button.EventType.CLICK, () => onClick());
     return button;
 }
+
+export function createToast(parent: Node, text: string): { root: Node; label: Label } {
+    const root = new Node('Toast');
+    root.setParent(parent);
+    const transform = root.addComponent(UITransform);
+    transform.setContentSize(new Size(520, 46));
+    const graphics = root.addComponent(Graphics);
+    graphics.fillColor = new Color(20, 20, 20, 220);
+    graphics.rect(-260, -23, 520, 46);
+    graphics.fill();
+
+    const label = createLabel(root, text);
+    label.fontSize = 18;
+    label.lineHeight = 22;
+    label.node.setPosition(new Vec3(0, -6));
+    return { root, label };
+}
