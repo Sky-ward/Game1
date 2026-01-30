@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1,
+    "name": "古洞遗刻",
+    "desc": "石壁刻着残缺剑诀。",
+    "options": [
+      { "desc": "临摹剑意", "cost": { "type": "gold", "amount": 3 }, "reward": { "type": "life", "amount": 1 }, "previewTag": "剑修" },
+      { "desc": "放弃离开", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "gold", "amount": 2 }, "previewTag": "稳妥" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "心魔幻境",
+    "desc": "心魔试炼正在逼近。",
+    "options": [
+      { "desc": "强行破境", "cost": { "type": "life", "amount": 1 }, "reward": { "type": "gold", "amount": 6 }, "previewTag": "风险" },
+      { "desc": "谨慎退避", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "gold", "amount": 1 }, "previewTag": "保守" }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "坊市黑商",
+    "desc": "黑商兜售古怪法宝。",
+    "options": [
+      { "desc": "低价购入", "cost": { "type": "gold", "amount": 5 }, "reward": { "type": "gold", "amount": 2 }, "previewTag": "器灵" },
+      { "desc": "转身离开", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "life", "amount": 1 }, "previewTag": "安全" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "灵泉",
+    "desc": "灵泉可洗涤道心。",
+    "options": [
+      { "desc": "静修片刻", "cost": { "type": "gold", "amount": 2 }, "reward": { "type": "life", "amount": 2 }, "previewTag": "丹道" },
+      { "desc": "取水离去", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "gold", "amount": 3 }, "previewTag": "资源" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "炼器炉",
+    "desc": "炉火正盛，适合炼器。",
+    "options": [
+      { "desc": "投料试炼", "cost": { "type": "gold", "amount": 4 }, "reward": { "type": "gold", "amount": 6 }, "previewTag": "器灵" },
+      { "desc": "留作以后", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "gold", "amount": 1 }, "previewTag": "保守" }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "妖兽巢穴",
+    "desc": "巢穴内传来兽吼。",
+    "options": [
+      { "desc": "驯服灵兽", "cost": { "type": "life", "amount": 1 }, "reward": { "type": "gold", "amount": 5 }, "previewTag": "御兽" },
+      { "desc": "绕道避开", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "life", "amount": 1 }, "previewTag": "安全" }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "禁制石门",
+    "desc": "石门封印着古阵。",
+    "options": [
+      { "desc": "破阵取宝", "cost": { "type": "gold", "amount": 3 }, "reward": { "type": "gold", "amount": 7 }, "previewTag": "阵道" },
+      { "desc": "观察学习", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "life", "amount": 1 }, "previewTag": "悟道" }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "雷池",
+    "desc": "雷池淬体，险中求进。",
+    "options": [
+      { "desc": "引雷淬体", "cost": { "type": "life", "amount": 1 }, "reward": { "type": "gold", "amount": 6 }, "previewTag": "雷法" },
+      { "desc": "远观即可", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "gold", "amount": 2 }, "previewTag": "安全" }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "丹毒试药",
+    "desc": "药性未知，可能是机缘。",
+    "options": [
+      { "desc": "服用试药", "cost": { "type": "life", "amount": 1 }, "reward": { "type": "life", "amount": 2 }, "previewTag": "丹道" },
+      { "desc": "留作材料", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "gold", "amount": 4 }, "previewTag": "资源" }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "符箓残卷",
+    "desc": "残卷蕴含符道奥义。",
+    "options": [
+      { "desc": "研读残卷", "cost": { "type": "gold", "amount": 2 }, "reward": { "type": "gold", "amount": 5 }, "previewTag": "符箓" },
+      { "desc": "出售残卷", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "gold", "amount": 3 }, "previewTag": "经济" }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "魂河渡口",
+    "desc": "魂河阴气森森。",
+    "options": [
+      { "desc": "渡河寻魂", "cost": { "type": "life", "amount": 1 }, "reward": { "type": "gold", "amount": 6 }, "previewTag": "魂修" },
+      { "desc": "绕路离开", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "life", "amount": 1 }, "previewTag": "安全" }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "天命卜卦",
+    "desc": "卜卦师窥探天命。",
+    "options": [
+      { "desc": "支付卦金", "cost": { "type": "gold", "amount": 3 }, "reward": { "type": "gold", "amount": 6 }, "previewTag": "天命" },
+      { "desc": "拒绝占卜", "cost": { "type": "gold", "amount": 0 }, "reward": { "type": "life", "amount": 1 }, "previewTag": "安全" }
+    ]
+  }
+]
