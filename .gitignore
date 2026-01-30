@@ -1,0 +1,7 @@
+library/
+temp/
+build/
+local/
+profiles/
+*.log
+.DS_Store
